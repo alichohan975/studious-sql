@@ -1,0 +1,62 @@
+Summarizing & Cleaning Data in SQL
+
+Duplicate check for film table
+
+SELECT title,
+       release_year,
+       language_id,
+       rental_duration,
+       COUNT(*)
+FROM film
+GROUP BY title,
+         release_year,
+         language_id,
+         rental_duration
+HAVING COUNT(*) >1;
+
+Duplicate check for customer table 
+
+SELECT customer_id,
+First_name,
+last_name,
+COUNT(*)
+FROM customer
+GROUP BY customer_id,
+First_name,
+last_name
+HAVING COUNT(*) >1;
+
+Summarize the data
+Select 
+Max(release_year), Min(release_year), AVG(release_year),
+Max(rental_duration), Min(rental_duration), AVG(rental_duration),
+Max(rental_rate), Min(rental_rate), AVG(rental_rate),
+MAX(length), Min(length),AVG(length),
+Max(replacement_cost), Min(replacement_cost),Avg(replacement_cost)
+From film
+
+Film table with non-numeral value
+
+SELECT mode() WITHIN GROUP (ORDER BY rating) as rating,
+mode() WITHIN GROUP (ORDER BY title)as title,
+mode() WITHIN GROUP (ORDER BY description) as description
+FROM film;
+
+
+Summary of customer table
+Select 
+Max(customer_id), Min(customer_id), Avg(customer_id),
+Max(store_id), Min(store_id), Avg(store_id),
+Max(address_id), Min(address_id), Avg(address_id)
+from customer
+
+Mode for non-numeral
+SELECT mode() WITHIN GROUP (ORDER BY first_name),
+mode() WITHIN GROUP (ORDER BY last_name),
+mode() WITHIN GROUP (ORDER BY email),
+mode() WITHIN GROUP (ORDER BY activebool)
+FROM customer
+
+
+
+
