@@ -1,0 +1,36 @@
+Filtering Data Data
+
+Film title contains the word Uptown in any position
+
+Select film_id, title, description
+from film
+WHere title like '%Uptown%'
+
+Film length is more than 120 minutes and rental rate is more than 2.99
+Select Film_id, description, title, length, rental_rate
+from film
+WHere length > '120' and rental_rate > '2.99'
+
+Rental duration is between 3 and 7 days (where 3 and 7 aren’t inclusive)
+Select Film_id, description, title, length, rental_duration
+from film
+Where rental_duration between '3' and '7'
+
+Film replacement cost is less than 14.99
+Select film_id, description, title, replacement_cost
+from film
+Where replacement_cost < '14.99'
+
+Film rating is either PG or G
+Select film_id, description, title, rating
+from film
+Where rating in ('PG', 'G')
+
+Step 3
+
+Select Count(film_id),
+AVG(rental_rate), 
+Max(rental_rate), 
+Min(rental_rate)
+from film
+Where rating in ('PG', 'G')
