@@ -1,0 +1,48 @@
+Performing subqueries
+
+Select AVG(total_amount_paid)
+From
+(Select first_name, last_name, city, Sum(amount) AS total_amount_paid, Country
+from payment
+join customer on payment.customer_id = customer.customer_id
+join address on customer.address_id = address.address_id
+join city on address.city_id = city.city_id 
+join country on city.country_id = country.country_id
+Where city in 
+('Aurora','Atlixco','Xintai','Adoni','Dhule','Kurashiki'			   
+'Pingxiang','Sivas','Celaya','So Leopoldo')
+Group by first_name, last_name, city, Country
+Order by total_amount_paid desc
+Limit 5) AS total_amount_paid
+
+All Customer count
+
+SELECT country.country,
+COUNT(DISTINCT customer.customer_id) AS all_customer_count,
+COUNT(DISTINCT country.country) AS top_customer_count
+FROM
+(SELECT customer.customer_id,
+customer.first_name,
+customer.last_name,
+country.country,
+city.city,
+SUM(payment.amount) AS total_amount_paid
+FROM customer
+INNER JOIN address ON customer.address_id = address.address_id
+INNER JOIN city ON address.city_id = city.city_id
+INNER JOIN country ON city.country_id = country.country_id
+INNER JOIN payment on customer.customer_id = payment.customer_id
+Where city in 
+('Aurora','Atlixco','Xintai','Adoni','Dhule','Kurashiki'			   
+'Pingxiang','Sivas','Celaya','So Leopoldo')
+GROUP BY customer.customer_id,customer.first_name,customer.last_name,country.country,city.city
+ORDER BY total_amount_paid DESC
+LIMIT 5) AS top_5_customers
+LEFT JOIN customer ON customer.customer_id = customer.customer_id
+LEFT JOIN address ON customer.address_id = address.address_id
+LEFT JOIN city ON address.city_id = city.city_id
+LEFT JOIN country ON city.country_id = country.country_id
+GROUP BY country.country
+ORDER BY COUNT (country.country) DESC
+LIMIT 5
+
