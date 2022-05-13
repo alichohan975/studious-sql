@@ -1,0 +1,18 @@
+Here is sql query with a common table expression
+
+With CTE_total_amount_paid as
+(Select AVG(total_amount_paid)
+From
+(Select first_name, last_name, city, Sum(amount) AS total_amount_paid, Country
+from payment
+join customer on payment.customer_id = customer.customer_id
+join address on customer.address_id = address.address_id
+join city on address.city_id = city.city_id 
+join country on city.country_id = country.country_id
+Where city in 
+('Aurora','Atlixco','Xintai','Adoni','Dhule','Kurashiki'			   
+'Pingxiang','Sivas','Celaya','So Leopoldo')
+Group by first_name, last_name, city, Country
+Order by total_amount_paid desc
+Limit 5) AS total_amount_paid)
+Select * from CTE_total_amount_paid
