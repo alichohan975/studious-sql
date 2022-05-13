@@ -1,0 +1,42 @@
+Joining table of Data
+
+Select Count(customer_id), country
+from customer
+join address on customer.address_id = address.address_id
+join city on address.city_id = city.city_id
+join country on city.country_id = country.country_id
+Group by country
+Order by count desc
+Limit '10'
+
+Write a few sentences on how you approached this query and why. It's important that you can explain your thought process when writing queries,
+especially for future interviews. Well, the question asked “ what are the top 10 countries for Rockbuster in terms of customer. In order for 
+me to come up with a clear answer, I needed to join customer table to address table, address table to the city table, and city table to country 
+table for me to able to aggrete the correct data. After we joined all the table, I used the select statement to choose country column. And I 
+used the count operator to count all the same customer_id for the countries, and lastly used the group by operator to group the  data by country.
+
+Select Count(Customer_id), city, country
+from customer
+join address on customer.address_id = address.address_id
+join city on address.city_id = city.city_id
+join country on city.country_id = country.country_id
+Where country in ('India','China','United States', 'Japan', 
+				  'Mexico', 'Brazil', 'Russian Federation', 
+				  'Philippines', 'Turkey', 'Indonesia')
+				  Group by city, country
+				  Order by count (city) desc
+
+Write a query to find the top 5 customers in the top 10 cities who have paid the highest total amounts to Rockbuster. 
+The customer team would like to reward them for their loyalty!
+Select first_name, last_name, city, Sum(amount), Country
+from payment
+join customer on payment.customer_id = customer.customer_id
+join address on customer.address_id = address.address_id
+join city on address.city_id = city.city_id 
+join country on city.country_id = country.country_id
+Where city in 
+('Aurora','Atlixco','Xintai','Adoni','Dhule','Kurashiki'			   
+'Pingxiang','Sivas','Celaya','So Leopoldo')
+Group by first_name, last_name, city, Country
+Order by sum desc
+Limit 5
